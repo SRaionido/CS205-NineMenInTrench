@@ -22,11 +22,28 @@ from driverTest import testFunct
 
 # The cost of each operator - 1
 
+def ucs(initial_state):
+    # Implement the Uniform Cost Search algorithm here
+    pass
+
+def a_star_manhattan(initial_state):
+    # Implement the A* search algorithm with Manhattan distance heuristic here
+    pass
+
+# def a_star_euclidean(initial_state):
+#     # Implement the A* search algorithm with Euclidean distance heuristic here
+#     # MAYBE WILL DO
+#     pass
+
 def main():
     # The initial state
     initial_state = [0, 2, 3, 4, 5, 6, 7, 8, 9, 1, 0, 0, 0]
 
+    # Implement custom input for the initial state
 
+    # Select what type search algorithm to use (UCS , A* w/Manhattan, A* w/Euclidean?)
+
+    # Execute which ever search algorithm is selected and print success or failure
 
     # Test the initial state and goal state
     testFunct(initial_state)
