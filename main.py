@@ -1,4 +1,5 @@
 from driverTest import testVar
+from driverTest import testFunct
 
 #  Things to need for 9 men in trench problem
 
@@ -21,3 +22,14 @@ from driverTest import testVar
 
 # The cost of each operator - 1
 
+def main():
+    # The initial state
+    initial_state = [0, 2, 3, 4, 5, 6, 7, 8, 9, 1, 0, 0, 0]
+
+
+
+    # Test the initial state and goal state
+    testFunct(initial_state)
+
+if __name__ == "__main__":
+    main()
