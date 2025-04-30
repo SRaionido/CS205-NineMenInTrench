@@ -25,6 +25,27 @@ from TrenchPuzzle import testFunct
 def ucs(initial_state):
     # Implement the Uniform Cost Search algorithm 
     print("Uniform Cost Search not implemented yet.")
+
+    nodes = []
+    visited = set()
+    queue = []
+    queue.append((initial_state, 0))  # (state, cost)
+    visited.add(tuple(initial_state))
+
+    while queue:
+        current_state, current_cost = queue.pop(0)
+
+        # Check if the current state is the goal state
+        if current_state == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0]:
+            print("Goal state reached!")
+            return
+
+        # Generate successors (children) of the current state
+
+    if len(queue) == 0:
+        print("No solution found.")
+        return
+
     pass
 
 def a_star_manhattan(initial_state):
