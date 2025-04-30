@@ -1,5 +1,5 @@
-from driverTest import testVar
-from driverTest import testFunct
+from TrenchPuzzle import testVar
+from TrenchPuzzle import testFunct
 
 #  Things to need for 9 men in trench problem
 
