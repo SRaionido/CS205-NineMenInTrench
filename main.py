@@ -23,7 +23,8 @@ from driverTest import testFunct
 # The cost of each operator - 1
 
 def ucs(initial_state):
-    # Implement the Uniform Cost Search algorithm here
+    # Implement the Uniform Cost Search algorithm 
+    print("Uniform Cost Search not implemented yet.")
     pass
 
 def a_star_manhattan(initial_state):
@@ -42,11 +43,24 @@ def main():
     # Implement custom input for the initial state
 
     # Select what type search algorithm to use (UCS , A* w/Manhattan, A* w/Euclidean?)
-
     # Execute which ever search algorithm is selected and print success or failure
 
-    # Test the initial state and goal state
-    testFunct(initial_state)
+    print("Select search algorithm:")
+    print("1. Uniform Cost Search")
+    print("2. A* Search with Manhattan Distance")
+
+    alg = input("Enter your choice (1 or 2): ")
+    if alg == '1':
+        print("Using Uniform Cost Search")
+        # Call the UCS function
+        ucs(initial_state)
+    elif alg == '2':
+        print("Using A* Search with Manhattan Distance")
+        # Call the A* function with Manhattan distance heuristic
+        a_star_manhattan(initial_state)
+    else:
+        print("Invalid choice. Please select 1 or 2.")
+
 
 if __name__ == "__main__":
     main()
