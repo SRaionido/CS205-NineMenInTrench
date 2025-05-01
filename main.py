@@ -24,7 +24,7 @@ from TrenchPuzzle import modify_queue
 
 def ucs(initial_state):
     # Implement the Uniform Cost Search algorithm 
-    print("Uniform Cost Search not implemented yet.")
+    # print("Uniform Cost Search not implemented yet.")
 
     nodes = []
     # Keep track of states that have been visited
@@ -37,8 +37,11 @@ def ucs(initial_state):
         current_state = queue.pop(0)
         # Check if the current state has already been visited
         if tuple(current_state.state) in visited:
+            # print("State already visited, skipping...")
             continue
         visited.add(tuple(current_state.state))
+        # Print size of visited set for debugging
+        print( f"Visited size: {len(visited)}")
 
         # Check if the current state is the goal state
         if current_state == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0]:
@@ -46,7 +49,7 @@ def ucs(initial_state):
             return
 
         # Generate successors (children) of the current state
-        queue = modify_queue(queue, current_state)
+        queue = modify_queue(queue, current_state, visited)
 
 
     if len(queue) == 0:
