@@ -12,54 +12,42 @@ def modify_queue(queue, current_state):
         # The blank can move down if the index value is 10, 11, or 12
         if index == 10:
             # Move blank down to index 3
-            new_state = current_state.state.copy()
-            new_state[index] = new_state[3]
-            new_state[3] = 0
-            # Replace the blank position with new index value
-            new_blank_positions = current_state.blank_positions.copy()
-            new_blank_positions.remove(index)
-            new_blank_positions.append(3)
-            print("Moving blank down to index 3")
-            queue.append(State(new_state, new_blank_positions))
+            queue = blank_down(current_state, 3, index, queue)
         elif index == 11:
             # Move blank down to index 5
-            new_state = current_state.state.copy()
-            new_state[index] = new_state[5]
-            new_state[5] = 0
-            # Replace the blank position with new index value
-            new_blank_positions = current_state.blank_positions.copy()
-            new_blank_positions.remove(index)
-            new_blank_positions.append(5)
-            print("Moving blank down to index 5")
-            queue.append(State(new_state, new_blank_positions))
+            queue = blank_down(current_state, 5, index, queue)
         elif index == 12:
             # Move blank down to index 7
-            new_state = current_state.state.copy()
-            new_state[index] = new_state[7]
-            new_state[7] = 0
-            # Replace the blank position with new index value
-            new_blank_positions = current_state.blank_positions.copy()
-            new_blank_positions.remove(index)
-            new_blank_positions.append(7)
-            print("Moving blank down to index 7")
-            queue.append(State(new_state, new_blank_positions))
+            queue = blank_down(current_state, 7, index, queue)
 
         # Check if moving up is possible
         # The blank can move up if the index value is 3, 5, or 7
         
 
         # Check if moving left is possible
+        # The blank can move left if the index value is not 0 and no other blank is next to the left of it
         
 
         # Check if moving right is possible
+        # The blank can move right if the index value is not 9 and no other blank is next to the right of it
         
 
     return queue
 
 
-def blank_down(state, index):
-    # Move the blank down if possible
-    pass
+def blank_down(state, newIndex, currIndex, queue):
+    # Move the blank down to new index
+    new_state = state.state.copy()
+    new_state[currIndex] = new_state[newIndex]
+    new_state[newIndex] = 0
+    # Replace the blank position with new index value
+    new_blank_positions = state.blank_positions.copy()
+    new_blank_positions.remove(currIndex)
+    new_blank_positions.append(newIndex)
+    print(f"Moving blank down to index {newIndex}")
+    queue.append(State(new_state, new_blank_positions))
+
+    return queue
 
 def blank_up(state, index):
     # Move the blank up if possible
