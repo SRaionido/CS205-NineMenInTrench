@@ -22,17 +22,6 @@ def modify_queue(queue, current_state):
             print("Moving blank down to index 3")
             queue.append(State(new_state, new_blank_positions))
         elif index == 11:
-            # Move blank down to index 4
-            new_state = current_state.state.copy()
-            new_state[index] = new_state[4]
-            new_state[4] = 0
-            # Replace the blank position with new index value
-            new_blank_positions = current_state.blank_positions.copy()
-            new_blank_positions.remove(index)
-            new_blank_positions.append(4)
-            print("Moving blank down to index 4")
-            queue.append(State(new_state, new_blank_positions))
-        elif index == 12:
             # Move blank down to index 5
             new_state = current_state.state.copy()
             new_state[index] = new_state[5]
@@ -43,8 +32,20 @@ def modify_queue(queue, current_state):
             new_blank_positions.append(5)
             print("Moving blank down to index 5")
             queue.append(State(new_state, new_blank_positions))
+        elif index == 12:
+            # Move blank down to index 7
+            new_state = current_state.state.copy()
+            new_state[index] = new_state[7]
+            new_state[7] = 0
+            # Replace the blank position with new index value
+            new_blank_positions = current_state.blank_positions.copy()
+            new_blank_positions.remove(index)
+            new_blank_positions.append(7)
+            print("Moving blank down to index 7")
+            queue.append(State(new_state, new_blank_positions))
 
         # Check if moving up is possible
+        # The blank can move up if the index value is 3, 5, or 7
         
 
         # Check if moving left is possible
