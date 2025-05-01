@@ -48,6 +48,16 @@ def modify_queue(queue, current_state, visited):
 
         # Check if moving right is possible
         # The blank can move right if the index value is not 9 and no other blank is next to the right of it
+        if index < 9 & index >= 0:
+            neighbor_present = False
+            for neighbor_check_index in current_state.blank_positions:
+                if neighbor_check_index == index + 1:
+                    neighbor_present = True
+                    # print (f"Blank at index {index} cannot move right because another blank is at index {neighbor_check_index}.")
+                    break
+            if not neighbor_present:
+                # Move blank right to index + 1
+                queue = blank_right(current_state, index + 1, index, queue, visited)
         
 
     return queue
@@ -107,7 +117,21 @@ def blank_left(state, newIndex, currIndex, queue, visited):
 
     return queue
 
-def blank_right(state, index):
+def blank_right(state, newIndex, currIndex, queue, visited):
     # Move the blank right if possible
-    pass
+    new_state = state.state.copy()
+    new_state[currIndex] = new_state[newIndex]
+    new_state[newIndex] = 0
+    # Replace the blank position with new index value
+    new_blank_positions = state.blank_positions.copy()
+    new_blank_positions.remove(currIndex)
+    new_blank_positions.append(newIndex)
+    # print(f"Moving blank right to index {newIndex}")
+    # Check if the new state has already been visited
+    if tuple(new_state) in visited:
+        # print("State already visited, skipping...")
+        return queue
+    queue.append(State(new_state, new_blank_positions))
+
+    return queue
 

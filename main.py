@@ -32,6 +32,7 @@ def ucs(initial_state):
     queue = []
     queue.append((initial_state))  # (state, cost)
     # visited.add(tuple(initial_state))
+    iteration = 1
 
     while queue:
         current_state = queue.pop(0)
@@ -41,7 +42,12 @@ def ucs(initial_state):
             continue
         visited.add(tuple(current_state.state))
         # Print size of visited set for debugging
-        print( f"Visited size: {len(visited)}")
+        if iteration % 100000 == 0:
+            print(f"Iteration: {iteration}, Queue size: {len(queue)}, Visited size: {len(visited)}")
+            iteration = 1
+
+        iteration += 1
+
 
         # Check if the current state is the goal state
         if current_state == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0]:
