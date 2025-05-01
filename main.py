@@ -1,5 +1,5 @@
-from TrenchPuzzle import testVar
-from TrenchPuzzle import testFunct
+from TrenchPuzzle import State
+from TrenchPuzzle import modify_queue
 
 #  Things to need for 9 men in trench problem
 
@@ -29,11 +29,11 @@ def ucs(initial_state):
     nodes = []
     visited = set()
     queue = []
-    queue.append((initial_state, 0))  # (state, cost)
-    visited.add(tuple(initial_state))
+    queue.append((initial_state))  # (state, cost)
+    # visited.add(tuple(initial_state))
 
     while queue:
-        current_state, current_cost = queue.pop(0)
+        current_state = queue.pop(0)
 
         # Check if the current state is the goal state
         if current_state == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0]:
@@ -41,6 +41,8 @@ def ucs(initial_state):
             return
 
         # Generate successors (children) of the current state
+        queue = modify_queue(queue, current_state)
+
 
     if len(queue) == 0:
         print("No solution found.")
@@ -58,8 +60,8 @@ def a_star_manhattan(initial_state):
 #     pass
 
 def main():
-    # The initial state
-    initial_state = [0, 2, 3, 4, 5, 6, 7, 8, 9, 1, 0, 0, 0]
+    # The initial 
+    initial_state = State([0, 2, 3, 4, 5, 6, 7, 8, 9, 1, 0, 0, 0], [0, 10, 11, 12])
 
     # Implement custom input for the initial state
 
