@@ -27,6 +27,7 @@ def ucs(initial_state):
     print("Uniform Cost Search not implemented yet.")
 
     nodes = []
+    # Keep track of states that have been visited
     visited = set()
     queue = []
     queue.append((initial_state))  # (state, cost)
@@ -34,6 +35,10 @@ def ucs(initial_state):
 
     while queue:
         current_state = queue.pop(0)
+        # Check if the current state has already been visited
+        if tuple(current_state.state) in visited:
+            continue
+        visited.add(tuple(current_state.state))
 
         # Check if the current state is the goal state
         if current_state == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0]:
@@ -46,6 +51,12 @@ def ucs(initial_state):
 
     if len(queue) == 0:
         print("No solution found.")
+
+        # Print the visited states for debugging
+        # print("Visited states:")
+        # for state in visited:
+        #     print(state)
+
         return
 
     pass
