@@ -62,6 +62,22 @@ def modify_queue(queue, current_state, visited):
 
     return queue
 
+def Astar_modify_queue(prio_queue, current_state, visited):
+    # Implement the A* algorithm to modify the priority queue
+
+    # TO BE IMPLEMENTED
+    print("A* algorithm not implemented yet.")
+    return prio_queue
+
+
+
+def manhattan_distance_heuristic_cost(state):
+    # Find the index of the 1 value in the state
+    index_of_1 = state.state.index(1)
+    # Calculate the Manhattan distance from the index of the sergant (1) to the goal position (index = 1)
+    heuristic = abs(index_of_1 - 1)
+    return heuristic + 1
+    
 
 def blank_down(state, newIndex, currIndex, queue, visited):
     # Move the blank down to new index
@@ -74,9 +90,9 @@ def blank_down(state, newIndex, currIndex, queue, visited):
     new_blank_positions.append(newIndex)
     # print(f"Moving blank down to index {newIndex}")
     # Check if the new state has already been visited
-    if tuple(new_state) in visited:
-        # print("State already visited, skipping...")
-        return queue
+    # if tuple(new_state) in visited:
+    #     # print("State already visited, skipping...")
+    #     return queue
     queue.append(State(new_state, new_blank_positions))
 
     return queue
@@ -92,9 +108,9 @@ def blank_up(state, newIndex, currIndex, queue, visited):
     new_blank_positions.append(newIndex)
     # print(f"Moving blank up to index {newIndex}")
     # Check if the new state has already been visited
-    if tuple(new_state) in visited:
-        # print("State already visited, skipping...")
-        return queue
+    # if tuple(new_state) in visited:
+    #     # print("State already visited, skipping...")
+    #     return queue
     queue.append(State(new_state, new_blank_positions))
 
     return queue
@@ -110,9 +126,9 @@ def blank_left(state, newIndex, currIndex, queue, visited):
     new_blank_positions.append(newIndex)
     # print(f"Moving blank left to index {newIndex}")
     # Check if the new state has already been visited
-    if tuple(new_state) in visited:
-        # print("State already visited, skipping...")
-        return queue
+    # if tuple(new_state) in visited:
+    #     # print("State already visited, skipping...")
+    #     return queue
     queue.append(State(new_state, new_blank_positions))
 
     return queue
@@ -128,9 +144,9 @@ def blank_right(state, newIndex, currIndex, queue, visited):
     new_blank_positions.append(newIndex)
     # print(f"Moving blank right to index {newIndex}")
     # Check if the new state has already been visited
-    if tuple(new_state) in visited:
-        # print("State already visited, skipping...")
-        return queue
+    # if tuple(new_state) in visited:
+    #     # print("State already visited, skipping...")
+    #     return queue
     queue.append(State(new_state, new_blank_positions))
 
     return queue

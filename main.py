@@ -1,22 +1,33 @@
 from TrenchPuzzle import State
 from TrenchPuzzle import modify_queue
+from TrenchPuzzle import Astar_modify_queue
+import heapq
+
 
 #  Things to need for 9 men in trench problem
 
 # Uniform cost search
 
 # How to represent the state of the problem
-# A state is vector of 13 numbers
-# All 0s are blanks
-# Numbers 1-9
-# Places 10-12 are where the divets are for the trench to move: 3 and 10, 5 and 11, 7 and 12 
+# A state is a list of 13 numbers
+# All 0s are blank spaces
+# Numbers for men are 1-9
+# Places 10-12 are where the spaces are for the trench to move out of the line:  index 3 under 10, 5 under 11, 7 under 12 
 
 
-# The initial state 
+# The initial state list:
 # 0 2 3 4 5 6 7 8 9 1 0 0 0
 
-# The goal state
+# Represents pictorally like this:
+#       0   0   0
+# 0 2 3 4 5 6 7 8 9 1
+
+# The goal state list:
 # 0 1 2 3 4 5 6 7 8 9 0 0 0
+
+# Represents pictorally like this:
+#       0   0   0
+# 0 1 2 3 4 5 6 7 8 9
 
 # Operators Move one of four blanks up, down, left, right (depending on the position of the blank)
 
@@ -72,11 +83,55 @@ def ucs(initial_state):
 
 def a_star_manhattan(initial_state):
     # Implement the A* search algorithm with Manhattan distance heuristic here
+    #  WORK IN PROGRESS, NOT FINISHED OR FUNCTIONAL YET
+
+    nodes = []
+    # Keep track of states that have been visited
+    visited = set()
+    priority_queue = []
+    heapq.heappush(priority_queue, (0, initial_state))  # (cost, state)
+    # visited.add(tuple(initial_state))
+    iteration = 1
+    
+
+    while priority_queue:
+        current_state = priority_queue.pop(0)
+        # Check if the current state has already been visited
+        if tuple(current_state.state) in visited:
+            # print("State already visited, skipping...")
+            continue
+        visited.add(tuple(current_state.state))
+        # Print size of visited set for debugging
+        if iteration % 100000 == 0:
+            print(f"Iteration: {iteration}, Queue size: {len(priority_queue)}, Visited size: {len(visited)}")
+            iteration = 1
+
+        iteration += 1
+
+
+        # Check if the current state is the goal state
+        if current_state == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0]:
+            print("Goal state reached!")
+            return
+
+        # Generate successors (children) of the current state
+        priority_queue = Astar_modify_queue(priority_queue, current_state, visited)
+
+
+    if len(priority_queue) == 0:
+        print("No solution found.")
+
+        # Print the visited states for debugging
+        # print("Visited states:")
+        # for state in visited:
+        #     print(state)
+
+        return
+    
     pass
 
 # def a_star_euclidean(initial_state):
 #     # Implement the A* search algorithm with Euclidean distance heuristic here
-#     # MAYBE WILL DO
 #     pass
 
 def main():
