@@ -1,6 +1,8 @@
 import heapq
 import itertools
 
+# This is a global counter to use to help break ties in the priority queue
+# It is used to ensure that if states had the same heuristic cost, they are ordered by the order they were added to the queue
 counter = itertools.count()
 
 class State:
@@ -137,7 +139,6 @@ def Astar_modify_queue(prio_queue, current_state, visited):
         # print("Finished expanding a node")
 
     return prio_queue
-
 
 def manhattan_distance_heuristic_cost(state):
     # Find the index of the 1 value in the state
