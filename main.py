@@ -163,7 +163,7 @@ def a_star_manhattan(initial_state):
 
 def main():
     # The initial 
-    initial_state = State([1, 2, 3, 4, 5, 6, 7, 8, 0, 9, 0, 0, 0], [8, 10, 11, 12])
+    initial_state = State([0, 2, 3, 4, 5, 6, 7, 8, 9, 1, 0, 0, 0], [0, 10, 11, 12])
 
     # Implement custom input for the initial state
 
