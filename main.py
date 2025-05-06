@@ -98,18 +98,18 @@ def a_star_manhattan(initial_state):
     # Implement the A* search algorithm with Manhattan distance heuristic here
     #  WORK IN PROGRESS, NOT FINISHED OR FUNCTIONAL YET
 
-    nodes = []
     # Keep track of states that have been visited
     visited = set()
     priority_queue = []
-    heapq.heappush(priority_queue, (0, initial_state))  # (cost, state)
+    heapq.heapify(priority_queue)
+    heapq.heappush(priority_queue, (0, 0, initial_state))  # (cost, state)
     # visited.add(tuple(initial_state))
-    iteration = 1
+    iteration = 0
     # Adding a start time to measure the time it takes to run the algorithm
     start_time = time.time()
 
     while priority_queue:
-        current_state = priority_queue.pop(0)
+        current_state = heapq.heappop(priority_queue)[2]
         # Check if the current state has already been visited
         if tuple(current_state.state) in visited:
             # print("State already visited, skipping...")
@@ -117,8 +117,8 @@ def a_star_manhattan(initial_state):
         visited.add(tuple(current_state.state))
         # Print size of visited set for debugging
         if iteration % 100000 == 0:
-            print(f"Iteration: {iteration}, Queue size: {len(priority_queue)}, Visited size: {len(visited)}")
-            iteration = 1
+            print(f"Queue size: {len(priority_queue)}, Visited size: {len(visited)}")
+            iteration = 0
 
         iteration += 1
 
@@ -130,6 +130,8 @@ def a_star_manhattan(initial_state):
             end_time = time.time()
             time_taken = end_time - start_time
             print(f"Time taken: {time_taken:.2f} seconds")
+            # Print the visited states for debugging
+            print("Number of visited states:", len(visited))
             return
 
         # Generate successors (children) of the current state
@@ -148,6 +150,8 @@ def a_star_manhattan(initial_state):
         end_time = time.time()
         time_taken = end_time - start_time
         print(f"Time taken: {time_taken:.2f} seconds")
+        # Print the visited states for debugging
+        print("Number of visited states:", len(visited))
 
         return
     
@@ -159,7 +163,7 @@ def a_star_manhattan(initial_state):
 
 def main():
     # The initial 
-    initial_state = State([1, 2, 3, 4, 5, 0, 0, 6, 8, 9, 0, 0, 7], [5, 6, 10, 11])
+    initial_state = State([1, 2, 3, 4, 5, 6, 7, 8, 0, 9, 0, 0, 0], [8, 10, 11, 12])
 
     # Implement custom input for the initial state
 
