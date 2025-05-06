@@ -24,11 +24,11 @@ import time
 # 0 2 3 4 5 6 7 8 9 1
 
 # The goal state list:
-# 0 1 2 3 4 5 6 7 8 9 0 0 0
+# 1 2 3 4 5 6 7 8 9 0 0 0 0
 
 # Represents pictorally like this:
 #       0   0   0
-# 0 1 2 3 4 5 6 7 8 9
+# 1 2 3 4 5 6 7 8 9 0
 
 # Operators Move one of four blanks up, down, left, right (depending on the position of the blank)
 
@@ -64,7 +64,7 @@ def ucs(initial_state):
 
 
         # Check if the current state is the goal state
-        if current_state.state == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0]:
+        if current_state.state == [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0]:
             print("Goal state reached!")
             # Calculate the time taken to run the algorithm
             end_time = time.time()
