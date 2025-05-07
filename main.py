@@ -47,6 +47,8 @@ def ucs(initial_state):
     iteration = 0
     # Adding a start time to measure the time it takes to run the algorithm
     start_time = time.time()
+    max_queue_size = 0  # Keep track of the maximum size of the queue
+    depth = 0  # Keep track of the depth of the current state
 
     while queue:
         current_state = queue.pop(0)
@@ -56,7 +58,7 @@ def ucs(initial_state):
             continue
         visited.add(tuple(current_state.state))
         # Print size of visited set for debugging
-        if iteration % 100000 == 0:
+        if iteration % 500000 == 0:
             print(f"Queue size: {len(queue)}, Visited size: {len(visited)}")
             iteration = 0
 
@@ -72,10 +74,16 @@ def ucs(initial_state):
             print(f"Time taken: {time_taken:.2f} seconds")
             # Print the visited states for debugging
             print("Number of visited states:", len(visited))
+            print("Queue size:", max_queue_size)
+            print("Depth:", current_state.depth)
             return
 
         # Generate successors (children) of the current state
+        # print("Generating successors...")
         queue = modify_queue(queue, current_state, visited)
+        # Update max queue size if current size is larger
+        if len(queue) > max_queue_size:
+            max_queue_size = len(queue)
 
 
     if len(queue) == 0:
@@ -105,8 +113,8 @@ def a_star_manhattan(initial_state):
     heapq.heappush(priority_queue, (0, 0, initial_state))  # (cost, state)
     # visited.add(tuple(initial_state))
     iteration = 0
-    # Adding a start time to measure the time it takes to run the algorithm
-    start_time = time.time()
+    start_time = time.time()    # Adding a start time to measure the time it takes to run the algorithm
+    max_queue_size = 0  # Keep track of the maximum size of the queue
 
     while priority_queue:
         current_state = heapq.heappop(priority_queue)[2]
@@ -116,7 +124,7 @@ def a_star_manhattan(initial_state):
             continue
         visited.add(tuple(current_state.state))
         # Print size of visited set for debugging
-        if iteration % 100000 == 0:
+        if iteration % 500000 == 0:
             print(f"Queue size: {len(priority_queue)}, Visited size: {len(visited)}")
             iteration = 0
 
@@ -132,10 +140,15 @@ def a_star_manhattan(initial_state):
             print(f"Time taken: {time_taken:.2f} seconds")
             # Print the visited states for debugging
             print("Number of visited states:", len(visited))
+            print("Queue size:", max_queue_size)
+            print("Depth:", current_state.depth)
             return
 
         # Generate successors (children) of the current state
         priority_queue = Astar_modify_queue(priority_queue, current_state, visited)
+        # Update max queue size if current size is larger
+        if len(priority_queue) > max_queue_size:
+            max_queue_size = len(priority_queue)
 
 
     if len(priority_queue) == 0:
@@ -152,6 +165,7 @@ def a_star_manhattan(initial_state):
         print(f"Time taken: {time_taken:.2f} seconds")
         # Print the visited states for debugging
         print("Number of visited states:", len(visited))
+        print("Queue size:", max_queue_size)
 
         return
     
