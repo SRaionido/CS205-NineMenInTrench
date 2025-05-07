@@ -142,6 +142,7 @@ def a_star_manhattan(initial_state):
             print("Number of visited states:", len(visited))
             print("Queue size:", max_queue_size)
             print("Depth:", current_state.depth)
+            print("Path:", current_state.path)
             return
 
         # Generate successors (children) of the current state

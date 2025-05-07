@@ -8,6 +8,8 @@ counter = itertools.count()
 class State:
     def __init__(self, curr_state, blank_positions):
         self.depth = 0
+        self.path = set()
+        self.path.add(tuple(curr_state))  # Add the current state to the path
         self.state = curr_state
         self.blank_positions = blank_positions  # List of indices of blank positions
 
@@ -151,7 +153,9 @@ def manhattan_distance_heuristic_cost(state):
         heuristic = 6
     elif index_of_1 == 12:
         heuristic = 8
-    heuristic = index_of_1
+    else:
+        heuristic = index_of_1
+    
     return heuristic + 1
 
 def swap(state, newIndex, currIndex, queue, visited, Mode):
@@ -175,6 +179,8 @@ def swap(state, newIndex, currIndex, queue, visited, Mode):
     if Mode == 0:
         addedState = State(new_state, new_blank_positions)
         addedState.depth = state.depth + 1
+        addedState.path = state.path.copy()
+        addedState.path.add(tuple(new_state))
         queue.append(addedState)
     elif Mode == 1:
         # Calculate the heuristic cost using Manhattan distance
@@ -182,6 +188,8 @@ def swap(state, newIndex, currIndex, queue, visited, Mode):
         # Add the state to the priority queue with the heuristic cost as the priority
         addedState = State(new_state, new_blank_positions)
         addedState.depth = state.depth + 1
+        addedState.path = state.path.copy()
+        addedState.path.add(tuple(new_state))
         heapq.heappush(queue, (heuristic_cost, next(counter), addedState))
     else:
         raise ValueError("Invalid mode. Mode should be 0 or 1.")
