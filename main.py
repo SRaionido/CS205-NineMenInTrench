@@ -1,6 +1,8 @@
 from TrenchPuzzle import State
 from TrenchPuzzle import modify_queue
 from TrenchPuzzle import Astar_modify_queue
+from TrenchPuzzle import print_state
+from TrenchPuzzle import manhattan_distance_heuristic_cost
 import heapq
 import time
 
@@ -99,8 +101,10 @@ def ucs(initial_state):
         print("Number of visited states:", len(visited))
 
         return
+    
+    print("No solution found.")
 
-    pass
+    return
 
 def a_star_manhattan(initial_state):
     # Implement the A* search algorithm with Manhattan distance heuristic here
@@ -117,6 +121,7 @@ def a_star_manhattan(initial_state):
     max_queue_size = 0  # Keep track of the maximum size of the queue
 
     while priority_queue:
+        # Pop the state with the lowest cost from the priority queue and save priority
         current_state = heapq.heappop(priority_queue)[2]
         # Check if the current state has already been visited
         if tuple(current_state.state) in visited:
@@ -127,8 +132,16 @@ def a_star_manhattan(initial_state):
         if iteration % 500000 == 0:
             print(f"Queue size: {len(priority_queue)}, Visited size: {len(visited)}")
             iteration = 0
+        # For debugging purposes, limit the number of iterations to 10
+        if iteration == 10:
+            print("Iteration limit reached, stopping...")
+            break
 
         iteration += 1
+
+        # Print current node being expanded and its cost
+        print("Expanding node with cost g(n) =", manhattan_distance_heuristic_cost(current_state))
+        print_state(current_state.state)
 
 
         # Check if the current state is the goal state
@@ -142,7 +155,6 @@ def a_star_manhattan(initial_state):
             print("Number of visited states:", len(visited))
             print("Queue size:", max_queue_size)
             print("Depth:", current_state.depth)
-            print("Path:", current_state.path)
             return
 
         # Generate successors (children) of the current state
@@ -170,17 +182,30 @@ def a_star_manhattan(initial_state):
 
         return
     
-    pass
+    print("No solution found.")
+    
+    return
 
 # def a_star_euclidean(initial_state):
 #     # Implement the A* search algorithm with Euclidean distance heuristic here
 #     pass
 
 def main():
-    # The initial 
-    initial_state = State([0, 2, 3, 4, 5, 6, 7, 8, 9, 1, 0, 0, 0], [0, 10, 11, 12])
+    # The Main Problem initial state
+    # initial_state = State([0, 2, 3, 4, 5, 6, 7, 8, 9, 1, 0, 0, 0], [0, 10, 11, 12])
 
     # Implement custom input for the initial state
+
+    initial_puzzle = input("Enter the initial state (13 numbers separated by spaces): ").split()
+    initial_puzzle = [int(x) for x in initial_puzzle]  # Convert to integers
+    blank_positions = []
+    for i in range(len(initial_puzzle)):
+        if initial_puzzle[i] == 0:
+            blank_positions.append(i)
+    initial_state = State(initial_puzzle, blank_positions)
+
+    print_state(initial_state.state)  # Print the initial state for debugging
+    print("Blank positions:", initial_state.blank_positions)  # Print the blank positions for debugging
 
     # Select what type search algorithm to use (UCS , A* w/Manhattan, A* w/Euclidean?)
     # Execute which ever search algorithm is selected and print success or failure
