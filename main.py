@@ -1,14 +1,11 @@
 from TrenchPuzzle import State
-from TrenchPuzzle import modify_queue
 from TrenchPuzzle import Astar_modify_queue
 from TrenchPuzzle import print_state
 from TrenchPuzzle import manhattan_distance_heuristic_cost
 import heapq
 import time
 
-#  Things to need for 9 men in trench problem
-
-# Uniform cost search
+#  Explanation of Problem Space:
 
 # How to represent the state of the problem
 # A state is a list of 13 numbers
@@ -16,40 +13,40 @@ import time
 # Numbers for men are 1-9
 # Places 10-12 are where the spaces are for the trench to move out of the line:  index 3 under 10, 5 under 11, 7 under 12 
 
-
 # The initial state list:
 # 0 2 3 4 5 6 7 8 9 1 0 0 0
-
 # Represents pictorally like this:
 #       0   0   0
 # 0 2 3 4 5 6 7 8 9 1
 
 # The goal state list:
 # 1 2 3 4 5 6 7 8 9 0 0 0 0
-
 # Represents pictorally like this:
 #       0   0   0
 # 1 2 3 4 5 6 7 8 9 0
 
 # Operators Move one of four blanks up, down, left, right (depending on the position of the blank)
-
 # The cost of each operator - 1
 
+#  Main driving function for the A* search algorithm
+#  Uses the Manhattan distance of the sergant (1) to the goal position (index = 0) as the heuristic cost
 def a_star_manhattan(initial_state):
-    # Implement the A* search algorithm with Manhattan distance heuristic here
-
     # Keep track of states that have been visited
     visited = set()
+    # 1. Make the priority queue
     priority_queue = []
     heapq.heapify(priority_queue)
-    heapq.heappush(priority_queue, (0, 0, initial_state))  # (cost, state)
-    # iteration = 0
-    start_time = time.time()    # Adding a start time to measure the time it takes to run the algorithm
-    max_queue_size = 0  # Keep track of the maximum size of the queue
+    heapq.heappush(priority_queue, (0, 0, initial_state))  # (cost, tie break, state)
+    # iteration = 0                                        # Keep track of the number of iterations
+    start_time = time.time()                               # Adding a start time to measure the time it takes to run the algorithm
+    max_queue_size = 0                                     # Keep track of the maximum size of the queue
 
+    # 2. Loop until queue is empty, or finds goal state
     while priority_queue:
+
         # Pop the state with the lowest cost from the priority queue and save priority
         current_state = heapq.heappop(priority_queue)[2]
+
         # Check if the current state has already been visited
         if tuple(current_state.state) in visited:
             # print("State already visited, skipping...")
@@ -73,39 +70,34 @@ def a_star_manhattan(initial_state):
         print_state(current_state.state)
 
 
-        # Check if the current state is the goal state
+        # 3. Check if the current state is the goal state
         if current_state.state == [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0]:
             print("Goal state reached!")
             # Calculate the time taken to run the algorithm
             end_time = time.time()
             time_taken = end_time - start_time
+            # Print Metrics
             print(f"Time taken: {time_taken:.2f} seconds")
-            # Print the visited states for debugging
             print("Number of visited states:", len(visited))
             print("Queue size:", max_queue_size)
             print("Depth:", current_state.depth)
             return
 
-        # Generate successors (children) of the current state
+        # 4. Expand the node and add new states to the priority queue if not the goal state
         priority_queue = Astar_modify_queue(priority_queue, current_state, visited)
         # Update max queue size if current size is larger
         if len(priority_queue) > max_queue_size:
             max_queue_size = len(priority_queue)
 
-
+    # 5. If the queue is empty, no solution was found
     if len(priority_queue) == 0:
         print("No solution found.")
-
-        # Print the visited states for debugging
-        # print("Visited states:")
-        # for state in visited:
-        #     print(state)
 
         # Calculate the time taken to run the algorithm
         end_time = time.time()
         time_taken = end_time - start_time
+        # Print metrics
         print(f"Time taken: {time_taken:.2f} seconds")
-        # Print the visited states for debugging
         print("Number of visited states:", len(visited))
         print("Queue size:", max_queue_size)
 
@@ -115,10 +107,7 @@ def a_star_manhattan(initial_state):
     
     return
 
-# def a_star_euclidean(initial_state):
-#     # Implement the A* search algorithm with Euclidean distance heuristic here
-#     pass
-
+# Main function to run the A* search algorithm and get user input
 def main():
     # The Main Problem initial state
     # initial_state = State([0, 2, 3, 4, 5, 6, 7, 8, 9, 1, 0, 0, 0], [0, 10, 11, 12])
@@ -143,7 +132,6 @@ def main():
     print_state(initial_state.state)  # Print the initial state for debugging
     print("Blank positions:", initial_state.blank_positions)  # Print the blank positions for debugging
 
-    # Call the A* function with Manhattan distance heuristic
     print("Using A* Search with Manhattan Distance")
     print("====================================")
 

@@ -5,6 +5,7 @@ import itertools
 # It is used to ensure that if states had the same heuristic cost, they are ordered by the order they were added to the queue
 counter = itertools.count()
 
+# This is a class to represent the state of the puzzle
 class State:
     def __init__(self, curr_state, blank_positions):
         self.depth = 0
@@ -14,6 +15,7 @@ class State:
     def __lt__(self, other):
         return self.state < other.state  # or any logic that makes sense for your State
 
+# This is a function to expand the current state and add the new states to the queue based on where blank spaces are
 def Astar_modify_queue(prio_queue, current_state, visited):
     # Implement the A* algorithm to modify the priority queue
 
@@ -81,6 +83,7 @@ def Astar_modify_queue(prio_queue, current_state, visited):
 
     return prio_queue
 
+# This is a helper function is the cost function for the A* algorithm using the Manhattan distance heuristic
 def manhattan_distance_heuristic_cost(state):
     # Find the index of the 1 value in the state
     index_of_1 = state.state.index(1)
@@ -96,6 +99,8 @@ def manhattan_distance_heuristic_cost(state):
     
     return heuristic + 1
 
+
+# This is a helper function to swap the blank position with the new index value
 def swap(state, newIndex, currIndex, queue, visited, Mode):
 
     global counter
@@ -108,12 +113,7 @@ def swap(state, newIndex, currIndex, queue, visited, Mode):
     new_blank_positions = state.blank_positions.copy()
     new_blank_positions.remove(currIndex)
     new_blank_positions.append(newIndex)
-    # print(f"Moving blank down to index {newIndex}")
-    # Check if the new state has already been visited
-    # if tuple(new_state) in visited:
-    #     # print("State already visited, skipping...")
-    #     return queue
-
+    
     if Mode == 0:
         addedState = State(new_state, new_blank_positions)
         addedState.depth = state.depth + 1
@@ -130,6 +130,7 @@ def swap(state, newIndex, currIndex, queue, visited, Mode):
 
     return queue
 
+# This is a helper function to print the state of the puzzle
 def print_state(puzzle_state):
     print ("      {0}   {1}   {2}".format(puzzle_state[10], puzzle_state[11], puzzle_state[12]))
     for i in puzzle_state[0:10]:
@@ -137,6 +138,11 @@ def print_state(puzzle_state):
     print()
     print()
 
+# ========================================================================================
+
+# This is a DEPRECATED function to modify the queue for Uniform Cost Search (UCS)
+# # It is not used in the current implementation of the A* algorithm
+# Kept for reference in case it is needed in the future
 def modify_queue(queue, current_state, visited):
     # Generate successors (children) of the current state
     # For each blank position, try to move it in all four directions
