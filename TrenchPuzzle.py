@@ -14,66 +14,6 @@ class State:
     def __lt__(self, other):
         return self.state < other.state  # or any logic that makes sense for your State
 
-def modify_queue(queue, current_state, visited):
-    # Generate successors (children) of the current state
-    # For each blank position, try to move it in all four directions
-    # print("Modifying queue...")
-    Mode = 0
-    for index in current_state.blank_positions:
-        # Check if moving down is possible
-        # The blank can move down if the index value is 10, 11, or 12
-        if index == 10:
-            # Move blank down to index 3
-            queue = swap(current_state, 3, index, queue, visited, Mode)
-        elif index == 11:
-            # Move blank down to index 5
-            queue = swap(current_state, 5, index, queue, visited, Mode)
-        elif index == 12:
-            # Move blank down to index 7
-            queue = swap(current_state, 7, index, queue, visited, Mode)
-
-        # Check if moving up is possible
-        # The blank can move up if the index value is 3, 5, or 7
-        if index == 3:
-            # Move blank up to index 10
-            queue = swap(current_state, 10, index, queue, visited, Mode)
-        elif index == 5:
-            # Move blank up to index 11
-            queue = swap(current_state, 11, index, queue, visited, Mode)
-        elif index == 7:
-            # Move blank up to index 12
-            queue = swap(current_state, 12, index, queue, visited, Mode)
-
-        # Check if moving left is possible
-        # The blank can move left if the index value is not 0 and no other blank is next to the left of it
-        if (index > 0) & (index < 10):
-            neighbor_present = False
-            for neighbor_check_index in current_state.blank_positions:
-                if neighbor_check_index == index - 1:
-                    neighbor_present = True
-                    # print (f"Blank at index {index} cannot move left because another blank is at index {neighbor_check_index}.")
-                    break
-            if not neighbor_present:
-                # Move blank left to index - 1
-                queue = swap(current_state, index - 1, index, queue, visited, Mode)
-
-
-        # Check if moving right is possible
-        # The blank can move right if the index value is not 9 and no other blank is next to the right of it
-        if index < 9:
-            neighbor_present = False
-            for neighbor_check_index in current_state.blank_positions:
-                if neighbor_check_index == index + 1:
-                    neighbor_present = True
-                    # print (f"Blank at index {index} cannot move right because another blank is at index {neighbor_check_index}.")
-                    break
-            if not neighbor_present:
-                # Move blank right to index + 1
-                queue = swap(current_state, index + 1, index, queue, visited, Mode)
-        
-
-    return queue
-
 def Astar_modify_queue(prio_queue, current_state, visited):
     # Implement the A* algorithm to modify the priority queue
 
@@ -191,8 +131,68 @@ def swap(state, newIndex, currIndex, queue, visited, Mode):
     return queue
 
 def print_state(puzzle_state):
-    print ("      {0} {1} {2}".format(puzzle_state[10], puzzle_state[11], puzzle_state[12]))
+    print ("      {0}   {1}   {2}".format(puzzle_state[10], puzzle_state[11], puzzle_state[12]))
     for i in puzzle_state[0:10]:
         print (i, end = " ")
     print()
     print()
+
+def modify_queue(queue, current_state, visited):
+    # Generate successors (children) of the current state
+    # For each blank position, try to move it in all four directions
+    # print("Modifying queue...")
+    Mode = 0
+    for index in current_state.blank_positions:
+        # Check if moving down is possible
+        # The blank can move down if the index value is 10, 11, or 12
+        if index == 10:
+            # Move blank down to index 3
+            queue = swap(current_state, 3, index, queue, visited, Mode)
+        elif index == 11:
+            # Move blank down to index 5
+            queue = swap(current_state, 5, index, queue, visited, Mode)
+        elif index == 12:
+            # Move blank down to index 7
+            queue = swap(current_state, 7, index, queue, visited, Mode)
+
+        # Check if moving up is possible
+        # The blank can move up if the index value is 3, 5, or 7
+        if index == 3:
+            # Move blank up to index 10
+            queue = swap(current_state, 10, index, queue, visited, Mode)
+        elif index == 5:
+            # Move blank up to index 11
+            queue = swap(current_state, 11, index, queue, visited, Mode)
+        elif index == 7:
+            # Move blank up to index 12
+            queue = swap(current_state, 12, index, queue, visited, Mode)
+
+        # Check if moving left is possible
+        # The blank can move left if the index value is not 0 and no other blank is next to the left of it
+        if (index > 0) & (index < 10):
+            neighbor_present = False
+            for neighbor_check_index in current_state.blank_positions:
+                if neighbor_check_index == index - 1:
+                    neighbor_present = True
+                    # print (f"Blank at index {index} cannot move left because another blank is at index {neighbor_check_index}.")
+                    break
+            if not neighbor_present:
+                # Move blank left to index - 1
+                queue = swap(current_state, index - 1, index, queue, visited, Mode)
+
+
+        # Check if moving right is possible
+        # The blank can move right if the index value is not 9 and no other blank is next to the right of it
+        if index < 9:
+            neighbor_present = False
+            for neighbor_check_index in current_state.blank_positions:
+                if neighbor_check_index == index + 1:
+                    neighbor_present = True
+                    # print (f"Blank at index {index} cannot move right because another blank is at index {neighbor_check_index}.")
+                    break
+            if not neighbor_present:
+                # Move blank right to index + 1
+                queue = swap(current_state, index + 1, index, queue, visited, Mode)
+        
+
+    return queue

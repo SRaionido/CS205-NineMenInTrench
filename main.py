@@ -6,7 +6,6 @@ from TrenchPuzzle import manhattan_distance_heuristic_cost
 import heapq
 import time
 
-
 #  Things to need for 9 men in trench problem
 
 # Uniform cost search
@@ -36,87 +35,15 @@ import time
 
 # The cost of each operator - 1
 
-def ucs(initial_state):
-    # Implement the Uniform Cost Search algorithm 
-    # print("Uniform Cost Search not implemented yet.")
-
-    nodes = []
-    # Keep track of states that have been visited
-    visited = set()
-    queue = []
-    queue.append((initial_state))  # (state, cost)
-    # visited.add(tuple(initial_state))
-    iteration = 0
-    # Adding a start time to measure the time it takes to run the algorithm
-    start_time = time.time()
-    max_queue_size = 0  # Keep track of the maximum size of the queue
-    depth = 0  # Keep track of the depth of the current state
-
-    while queue:
-        current_state = queue.pop(0)
-        # Check if the current state has already been visited
-        if tuple(current_state.state) in visited:
-            # print("State already visited, skipping...")
-            continue
-        visited.add(tuple(current_state.state))
-        # Print size of visited set for debugging
-        if iteration % 500000 == 0:
-            print(f"Queue size: {len(queue)}, Visited size: {len(visited)}")
-            iteration = 0
-
-        iteration += 1
-
-
-        # Check if the current state is the goal state
-        if current_state.state == [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0]:
-            print("Goal state reached!")
-            # Calculate the time taken to run the algorithm
-            end_time = time.time()
-            time_taken = end_time - start_time
-            print(f"Time taken: {time_taken:.2f} seconds")
-            # Print the visited states for debugging
-            print("Number of visited states:", len(visited))
-            print("Queue size:", max_queue_size)
-            print("Depth:", current_state.depth)
-            return
-
-        # Generate successors (children) of the current state
-        # print("Generating successors...")
-        queue = modify_queue(queue, current_state, visited)
-        # Update max queue size if current size is larger
-        if len(queue) > max_queue_size:
-            max_queue_size = len(queue)
-
-
-    if len(queue) == 0:
-        print("No solution found.")
-
-        # Print the visited states for debugging
-        # print("Visited states:")
-        # for state in visited:
-        #     print(state)
-        end_time = time.time()
-        time_taken = end_time - start_time
-        print(f"Time taken: {time_taken:.2f} seconds")
-        print("Number of visited states:", len(visited))
-
-        return
-    
-    print("No solution found.")
-
-    return
-
 def a_star_manhattan(initial_state):
     # Implement the A* search algorithm with Manhattan distance heuristic here
-    #  WORK IN PROGRESS, NOT FINISHED OR FUNCTIONAL YET
 
     # Keep track of states that have been visited
     visited = set()
     priority_queue = []
     heapq.heapify(priority_queue)
     heapq.heappush(priority_queue, (0, 0, initial_state))  # (cost, state)
-    # visited.add(tuple(initial_state))
-    iteration = 0
+    # iteration = 0
     start_time = time.time()    # Adding a start time to measure the time it takes to run the algorithm
     max_queue_size = 0  # Keep track of the maximum size of the queue
 
@@ -128,16 +55,18 @@ def a_star_manhattan(initial_state):
             # print("State already visited, skipping...")
             continue
         visited.add(tuple(current_state.state))
-        # Print size of visited set for debugging
-        if iteration % 500000 == 0:
-            print(f"Queue size: {len(priority_queue)}, Visited size: {len(visited)}")
-            iteration = 0
-        # For debugging purposes, limit the number of iterations to 10
-        if iteration == 10:
-            print("Iteration limit reached, stopping...")
-            break
 
-        iteration += 1
+        # Print size of visited set for debugging
+        # if iteration % 500000 == 0:
+        #     print(f"Queue size: {len(priority_queue)}, Visited size: {len(visited)}")
+        #     iteration = 0
+
+        # For debugging purposes, limit the number of iterations to 10
+        # if iteration == 10:
+        #     print("Iteration limit reached, stopping...")
+        #     break
+
+        # iteration += 1
 
         # Print current node being expanded and its cost
         print("Expanding node with cost g(n) =", manhattan_distance_heuristic_cost(current_state))
@@ -198,34 +127,106 @@ def main():
 
     initial_puzzle = input("Enter the initial state (13 numbers separated by spaces): ").split()
     initial_puzzle = [int(x) for x in initial_puzzle]  # Convert to integers
+    if len(initial_puzzle) != 13:
+        print("Invalid input. Please enter exactly 13 numbers.")
+        return
+    
     blank_positions = []
     for i in range(len(initial_puzzle)):
         if initial_puzzle[i] == 0:
             blank_positions.append(i)
     initial_state = State(initial_puzzle, blank_positions)
+    if len(blank_positions) != 4:
+        print("Invalid input. Please enter exactly 4 blank positions.")
+        return
 
     print_state(initial_state.state)  # Print the initial state for debugging
     print("Blank positions:", initial_state.blank_positions)  # Print the blank positions for debugging
 
-    # Select what type search algorithm to use (UCS , A* w/Manhattan, A* w/Euclidean?)
-    # Execute which ever search algorithm is selected and print success or failure
+    # Call the A* function with Manhattan distance heuristic
+    print("Using A* Search with Manhattan Distance")
+    print("====================================")
 
-    print("Select search algorithm:")
-    print("1. Uniform Cost Search")
-    print("2. A* Search with Manhattan Distance")
+    # Call the A* function with Manhattan distance heuristic
+    a_star_manhattan(initial_state)
 
-    alg = input("Enter your choice (1 or 2): ")
-    if alg == '1':
-        print("Using Uniform Cost Search")
-        # Call the UCS function
-        ucs(initial_state)
-    elif alg == '2':
-        print("Using A* Search with Manhattan Distance")
-        # Call the A* function with Manhattan distance heuristic
-        a_star_manhattan(initial_state)
-    else:
-        print("Invalid choice. Please select 1 or 2.")
+    return
 
 
 if __name__ == "__main__":
     main()
+
+
+# This was a uniform cost search function that was initially implemented to test functions related to problem space.
+# The function was commented out once A* search was implemented.
+# Kept for reference and proof of progress. Was not fully tested due to how long it took to run.
+
+# def ucs(initial_state):
+#     # Implement the Uniform Cost Search algorithm 
+#     # print("Uniform Cost Search not implemented yet.")
+
+#     nodes = []
+#     # Keep track of states that have been visited
+#     visited = set()
+#     queue = []
+#     queue.append((initial_state))  # (state, cost)
+#     # visited.add(tuple(initial_state))
+#     iteration = 0
+#     # Adding a start time to measure the time it takes to run the algorithm
+#     start_time = time.time()
+#     max_queue_size = 0  # Keep track of the maximum size of the queue
+#     depth = 0  # Keep track of the depth of the current state
+
+#     while queue:
+#         current_state = queue.pop(0)
+#         # Check if the current state has already been visited
+#         if tuple(current_state.state) in visited:
+#             # print("State already visited, skipping...")
+#             continue
+#         visited.add(tuple(current_state.state))
+#         # Print size of visited set for debugging
+#         if iteration % 500000 == 0:
+#             print(f"Queue size: {len(queue)}, Visited size: {len(visited)}")
+#             iteration = 0
+
+#         iteration += 1
+
+
+#         # Check if the current state is the goal state
+#         if current_state.state == [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0]:
+#             print("Goal state reached!")
+#             # Calculate the time taken to run the algorithm
+#             end_time = time.time()
+#             time_taken = end_time - start_time
+#             print(f"Time taken: {time_taken:.2f} seconds")
+#             # Print the visited states for debugging
+#             print("Number of visited states:", len(visited))
+#             print("Queue size:", max_queue_size)
+#             print("Depth:", current_state.depth)
+#             return
+
+#         # Generate successors (children) of the current state
+#         # print("Generating successors...")
+#         queue = modify_queue(queue, current_state, visited)
+#         # Update max queue size if current size is larger
+#         if len(queue) > max_queue_size:
+#             max_queue_size = len(queue)
+
+
+#     if len(queue) == 0:
+#         print("No solution found.")
+
+#         # Print the visited states for debugging
+#         # print("Visited states:")
+#         # for state in visited:
+#         #     print(state)
+#         end_time = time.time()
+#         time_taken = end_time - start_time
+#         print(f"Time taken: {time_taken:.2f} seconds")
+#         print("Number of visited states:", len(visited))
+
+#         return
+    
+#     print("No solution found.")
+
+#     return
