@@ -66,7 +66,7 @@ def a_star_manhattan(initial_state):
         # iteration += 1
 
         # Print current node being expanded and its cost
-        print("Expanding node with cost g(n) =", manhattan_distance_heuristic_cost(current_state))
+        print("Expanding node with cost f(n) =", manhattan_distance_heuristic_cost(current_state))
         print_state(current_state.state)
 
 
